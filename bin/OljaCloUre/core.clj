@@ -1,6 +1,6 @@
 (ns OljaCloUre.core)
 
 (defn foo
-  "I don't do a whole lot."
+  "I do not do a whole lot."
   [x]
   (println x "Hello, World!"))
