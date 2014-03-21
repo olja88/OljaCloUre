@@ -1,5 +1,5 @@
 (ns oljacl.model.migration
-  (:require [clojure.java.jdbc :as sql]))
+  (:require [clojure.java.jdbc.deprecated :as sql]))
 
 (defn migrated? []
   (not (zero?
