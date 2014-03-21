@@ -16,7 +16,7 @@
     (fn [test] [:h2 {:class "test"} (h (:body test))])
     tests)])
 
-(defn index [shouts]
+(defn index [tests]
   (layout/common "TESTER"
                  (test-form)
                  [:div {:class "clear"}]
