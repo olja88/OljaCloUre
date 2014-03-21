@@ -3,9 +3,9 @@
         [ring.adapter.jetty :as ring])
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
-            [shouter.controller.tests :as controler]
-            [shouter.view.layout :as layout]
-            [shouter.model.migration :as schema])
+            [oljacl.controller.tests :as controler]
+            [oljacl.view.layout :as layout]
+            [oljacl.model.migration :as schema])
   (:gen-class))
 
 (defroutes routes
