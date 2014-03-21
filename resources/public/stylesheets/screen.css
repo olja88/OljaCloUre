@@ -168,7 +168,7 @@ h1 span a {
 
 }
 
-.shout { 
+.test { 
   padding: 15px;
   text-transform: uppercase; 
   width: 50%; 
@@ -189,7 +189,7 @@ h1 span a {
       width: auto;
       margin-top: 0;      
     }
-    .shout {
+    .test {
       width: auto;
     }
 	  #header h1 {
@@ -225,7 +225,7 @@ h1 span a {
 	    margin-top: 10px;
 	    margin-bottom: 5px;
 	  }
-	  .shout:first-child {
+	  .test:first-child {
       margin: 0;
     }
 	}

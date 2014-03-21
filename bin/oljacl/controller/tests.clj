@@ -3,7 +3,7 @@
     (:require [clojure.string :as str]
               [ring.util.response :as ring]
               [oljacl.view.tests :as view]
-              [oljacl.models.test :as model]))
+              [oljacl.model.test :as model]))
 
 (defn index []
   (view/index (model/all)))
