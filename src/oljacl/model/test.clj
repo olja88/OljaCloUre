@@ -1,5 +1,5 @@
 (ns oljacl.model.test
-    (:require [clojure.java.jdbc :as sql]))
+    (:require [clojure.java.jdbc.deprecated :as sql]))
 
 (defn all []
   (sql/with-connection (System/getenv "DATABASE_URL")
