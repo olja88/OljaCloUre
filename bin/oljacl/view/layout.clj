@@ -21,4 +21,4 @@
 (defn glavni-template []
   (common "Zalutali ste"
           [:div {:id "glavni-template"}
-           "Verovatno ste pogrešili adresu, na ovoj nema ništa!"]))
+          [:h1 {:class "container"} "Verovatno ste pogrešili adresu, na ovoj nema ništa!"]]))
