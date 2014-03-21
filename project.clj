@@ -7,8 +7,8 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/java.jdbc "0.3.3"]
                  [postgresql "9.1-901.jdbc4"]
-                 [ring/ring-jetty-adapter "1.2.1"]
+                 [ring/ring-jetty-adapter "1.2.2"]
                  [compojure "1.1.6"]
-                 [hiccup "1.0.4"]]
+                 [hiccup "1.0.5"]]
   :main oljacl.core
   :aot [oljacl.core])
