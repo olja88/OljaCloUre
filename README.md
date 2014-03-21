@@ -1,14 +1,10 @@
-# OljaCloUre
+OljaCloUre
+==========
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
+Clojure app powered by Olja Latinović
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+The MIT License (MIT)
