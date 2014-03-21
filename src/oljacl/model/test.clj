@@ -7,6 +7,6 @@
       ["select * from tests order by id desc"]
       (into [] results))))
 
-(defn create [shout]
+(defn create [test]
   (sql/with-connection (System/getenv "DATABASE_URL")
     (sql/insert-values :tests [:body] [test])))
