@@ -11,9 +11,9 @@
     [:meta {:name "author" :content "Olja Latinović"}]
     [:meta {:name "keywords" :content "Olja Latinović, Clojure, Jquery"}]
     [:title title]
-    (include-css "/stylesheets/screen.css"
+    (include-css "/stylesheets/base.css"
                  "/stylesheets/skeleton.css"
-                 "/stylesheets/base.css")
+                 "/stylesheets/screen.css")
     (include-css "http://fonts.googleapis.com/css?family=Sigmar+One&v1")
     ;;(include-css "/css/bootstrap.min.css") 
    ]
@@ -23,7 +23,7 @@
     [:div {:id "content" :class "container"} body]
    
    [:footer{:id "container"}
-           [:small "&copy; Olja Latinović - 2014. "]]
+           [:h1 {:class "container"} "&copy; Olja Latinović - 2014. "]]
     ;;(include-js "/js/jquery-2.1.0.min.js")
     ;;(include-js "/js/bootstrap.min.js")      
    ]
