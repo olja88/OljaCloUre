@@ -63,7 +63,7 @@
 (def page (handler/site
             (friend/authenticate
               routes
-              {:allow-anon? true
+              {:allow-anon? false
                :login-uri "/login"
                :default-landing-uri "/"
                :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
