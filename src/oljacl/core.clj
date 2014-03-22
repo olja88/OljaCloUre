@@ -95,12 +95,12 @@
                      (sort-by :ns-name)))
 
 (def erp (handler/site
+            (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+            (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+              (compojure/context route-prefix []
+                                 (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))               
             (friend/authenticate
-              routes
-              (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
-              (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
-                (compojure/context route-prefix []
-                                   (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))              
+              routes          
              {:allow-anon? true
                :login-uri "/login"
                :default-landing-uri "/login"
