@@ -62,7 +62,7 @@
 
 (def page (handler/site
             (friend/authenticate
-              landing
+              routes
               {:allow-anon? true
                :login-uri "/login"
                :default-landing-uri "/"
