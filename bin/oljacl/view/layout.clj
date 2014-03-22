@@ -23,7 +23,7 @@
     [:div {:id "content" :class "container"} body]
    
    [:footer{:id "footer"}
-           [:p "&copy; Olja Latinović - 2014. "]]
+           [:small "&copy; Olja Latinović - 2014. "]]
     ;;(include-js "/js/jquery-2.1.0.min.js")
     ;;(include-js "/js/bootstrap.min.js")      
    ]
