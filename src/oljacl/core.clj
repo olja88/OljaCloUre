@@ -1,44 +1,30 @@
 (ns oljacl.core
-  (:use [ring.adapter.jetty :as ring]
-        [hiccup.core :only (html)]
-        [hiccup.page :only (html5 include-css include-js)])        
-  (:require (compojure handler [route :as route])
-            [compojure.core :as compojure :refer (GET defroutes)]
-            [hiccup.core :as h]
-            [hiccup.element :as e]
-            [ring.middleware.resource :refer (wrap-resource)]
-            ring.adapter.jetty
-            [bultitude.core :as b]            
-            [oljacl.model.migration :as schema]
-            [oljacl.controller.misc :as misc]
+  (:use [ring.adapter.jetty :as ring])        
+  (:require [oljacl.controller.misc :as misc]
             [oljacl.controller.users :as users :refer (users)]
             [cemerick.friend :as friend]
             (cemerick.friend [workflows :as workflows]
                              [credentials :as creds])
-            )
-  (:gen-class))
+            [compojure.core :as compojure :refer (GET POST ANY defroutes)]
+            (compojure [handler :as handler]
+                       [route :as route])
+            [ring.util.response :as resp]
+            [hiccup.page :as h]
+            [hiccup.element :as e]))
 
-(defn- erp-vars
-  [ns]
-  {:namespace ns
-   :ns-name (ns-name ns)
-   :name (-> ns meta :name)
-   :doc (-> ns meta :doc)
-   :route-prefix (misc/ns->context ns)
-   :app (ns-resolve ns 'app)
-   :page (ns-resolve ns 'page)})
+(def login-form
+  [:div {:class "row"}
+   [:div {:class "columns small-12"}
+    [:h3 "Login"]
+    [:div {:class "row"}
+     [:form {:method "POST" :action "login" :class "columns small-4"}
+      [:div "Username" [:input {:type "text" :name "username"}]]
+      [:div "Password" [:input {:type "password" :name "password"}]]
+      [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]])
 
-(def the-menagerie (->> (b/namespaces-on-classpath :prefix misc/ns-prefix)
-                     distinct
-                     (map #(do (require %) (the-ns %)))
-                     (map erp-vars)
-                     (filter #(or (:app %) (:page %)))
-                     (sort-by :ns-name)))
-
-
-(compojure/defroutes landing
+(compojure/defroutes routes
   (GET "/" req
-    (html5
+    (h/html5
       misc/pretty-head
       (misc/pretty-body
        (misc/github-link req)
@@ -62,7 +48,7 @@
        [:h3 "Logging out"]
        [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))
   (GET "/login" req
-    (html5 misc/pretty-head (misc/pretty-body login-form)))
+    (h/html5 misc/pretty-head (misc/pretty-body login-form)))
   (GET "/logout" req
     (friend/logout* (resp/redirect (str (:context req) "/"))))
   (GET "/requires-authentication" req
@@ -78,34 +64,23 @@
               {:allow-anon? true
                :login-uri "/login"
                :default-landing-uri "/"
-               :unauthorized-handler #(-> (html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
+               :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
                                         resp/response
                                         (resp/status 401))
                :credential-fn #(creds/bcrypt-credential-fn @users %)
-               :workflows [(workflows/interactive-form)]})))  
-  
-
-(def login-form
-  [:div {:class "row"}
-   [:div {:class "columns small-12"}
-    [:h3 "Login"]
-    [:div {:class "row"}
-     [:form {:method "POST" :action "login" :class "columns small-4"}
-      [:div "Username" [:input {:type "text" :name "username"}]]
-      [:div "Password" [:input {:type "password" :name "password"}]]
-      [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]])
+               :workflows [(workflows/interactive-form)]})))
                         
 
-(defn- wrap-app-metadata
-  [h app-metadata]
-  (fn [req] (h (assoc req :demo app-metadata))))
+;;(defn- wrap-app-metadata
+;;  [h app-metadata]
+;;  (fn [req] (h (assoc req :demo app-metadata))))
 
-(def erp (apply compojure/routes
-           landing
-           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
-           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
-             (compojure/context route-prefix []
-               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
+;;(def erp (apply compojure/routes
+;;           landing
+;;           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+;;           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+;;             (compojure/context route-prefix []
+;;               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
 
 (defn start [port]
   (run-jetty erp {:port port
