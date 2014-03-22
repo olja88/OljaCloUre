@@ -6,9 +6,14 @@
             [hiccup.element :as e]
             [ring.middleware.resource :refer (wrap-resource)]
             ring.adapter.jetty
-            [bultitude.core :as b]
+            [bultitude.core :as b]            
+            [oljacl.model.migration :as schema]
             [oljacl.controller.misc :as misc]
-            [oljacl.model.migration :as schema])
+            [oljacl.controller.users :as users :refer (users)]
+            [cemerick.friend :as friend]
+            (cemerick.friend [workflows :as workflows]
+                             [credentials :as creds])
+            )
   (:gen-class))
 
 (defn- erp-vars
