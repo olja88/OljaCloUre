@@ -10,7 +10,8 @@
                        [route :as route])
             [ring.util.response :as resp]
             [hiccup.page :as h]
-            [hiccup.element :as e]))
+            [hiccup.element :as e]
+            [bultitude.core :as b]))
 
 (def login-form
   [:div {:class "row"}
@@ -74,6 +75,23 @@
 (defn- wrap-app-metadata
   [h app-metadata]
   (fn [req] (h (assoc req :demo app-metadata))))
+
+(defn- erp-vars
+  [ns]
+  {:namespace ns
+   :ns-name (ns-name ns)
+   :name (-> ns meta :name)
+   :doc (-> ns meta :doc)
+   :route-prefix (misc/ns->context ns)
+   :app (ns-resolve ns 'app)
+   :page (ns-resolve ns 'page)})
+
+(def the-menagerie (->> (b/namespaces-on-classpath :prefix misc/ns-prefix)
+                     distinct
+                     (map #(do (require %) (the-ns %)))
+                     (map erp-vars)
+                     (filter #(or (:app %) (:page %)))
+                     (sort-by :ns-name)))
 
 (def erp (apply compojure/routes
            page
