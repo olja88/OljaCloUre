@@ -14,11 +14,11 @@
                  "/stylesheets/screen.css")
     (include-css "http://fonts.googleapis.com/css?family=Sigmar+One&v1")]
    [:body
-    [:div {:id "header"}
+    [:header {:id "header"}
     [:h1 {:class "container"} "Olja Clojure"]]
     [:div {:id "content" :class "container"} body]
    
-   [:footer{:id "footer" :class "container"}
+   [:footer{:id "footer"}
            [:p "&copy; Olja Latinović - 2014. "]]]
    
    )
