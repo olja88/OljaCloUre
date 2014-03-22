@@ -15,7 +15,7 @@
                  "/stylesheets/skeleton.css"
                  "/stylesheets/screen.css")
     (include-css "http://fonts.googleapis.com/css?family=Sigmar+One&v1")
-    (include-css "/css/bootstrap.min.css") 
+    ;;(include-css "/css/bootstrap.min.css") 
    ]
    [:body
     [:header {:id "header"}
@@ -24,11 +24,10 @@
    
    [:footer{:id "footer"}
            [:p "&copy; Olja Latinović - 2014. "]]
-    (include-js "/js/jquery-2.1.0.min.js")
-    (include-js "/js/bootstrap.min.js")      
+    ;;(include-js "/js/jquery-2.1.0.min.js")
+    ;;(include-js "/js/bootstrap.min.js")      
    ]
    )
-  
  )
 
 (defn err404-template []
