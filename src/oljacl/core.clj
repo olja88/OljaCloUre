@@ -56,8 +56,10 @@
                (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
 
 (defn start [port]
-  (run-jetty application {:port port
+  (run-jetty erp {:port port
                           :join? false}))
+
+(def application (handler/site routes))
 
 (defn -main []
   (schema/migrate)
