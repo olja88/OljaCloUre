@@ -16,7 +16,14 @@
    [:body
     [:div {:id "header"}
     [:h1 {:class "container"} "Olja Clojure"]]
-    [:div {:id "content" :class "container"} body]]))
+    [:div {:id "content" :class "container"} body]]
+   
+   [:footer{:id "footer"}
+            [:p "&copy; Olja Latinović - 2014. "]]
+   
+   )
+  
+ )
 
 (defn glavni-template []
   (common "Zalutali ste"
