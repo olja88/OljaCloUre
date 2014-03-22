@@ -1,6 +1,6 @@
 (ns oljacl.view.layout
   (:use [hiccup.core :only (html)]
-        [hiccup.page :only (html5 include-css)]))
+        [hiccup.page :only (html5 include-css include-js)]))
 
 (defn common [title & body]
   (html5
@@ -11,9 +11,7 @@
     [:meta {:name "author" :content "Olja Latinović"}]
     [:meta {:name "keywords" :content "Olja Latinović, Clojure, Jquery"}]
     [:title title]
-    (include-css "/css/bootstrap.min.css")
-    (include-js "/js/jquery-2.1.0.min.js")
-    (include-js "/js/bootstrap.min.js")    
+    (include-css "/css/bootstrap.min.css") 
    ]
    [:body
     [:header {:id "header"}
@@ -22,6 +20,8 @@
    
    [:footer{:id "footer"}
            [:p "&copy; Olja Latinović - 2014. "]]
+    (include-js "/js/jquery-2.1.0.min.js")
+    (include-js "/js/bootstrap.min.js")      
    ]
    )
   
