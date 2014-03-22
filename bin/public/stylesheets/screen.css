@@ -54,7 +54,7 @@ a {
   height: 60px;
   background-color: #2c4663;	
 }
-#footer small{
+#footer h1.container {
   font-size: 24px;
   font-weight: normal;
   margin-bottom: 10px;
