@@ -94,12 +94,29 @@
                      (filter #(or (:app %) (:page %)))
                      (sort-by :ns-name)))
 
-(def erp (apply compojure/routes
-           page
-           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
-           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
-             (compojure/context route-prefix []
-               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
+(def erp (handler/site
+            (friend/authenticate
+              routes
+              (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+              (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+                (compojure/context route-prefix []
+                                   (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))              
+             {:allow-anon? true
+               :login-uri "/login"
+               :default-landing-uri "/login"
+               :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
+                                        resp/response
+                                        (resp/status 401))
+               :credential-fn #(creds/bcrypt-credential-fn @users %)
+               :workflows [(workflows/interactive-form)]})))
+
+
+;;(def erp (apply compojure/routes
+;;           page
+;;           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+;;           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+;;             (compojure/context route-prefix []
+;;               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
 
 
 
@@ -140,7 +157,7 @@ recognize two different username/password combinations:"]
 
 
 (defn start [port]
-  (run-jetty page {:port port
+  (run-jetty erp {:port port
                           :join? false}))
 
 ;;(def application (handler/site routes))
