@@ -9,6 +9,8 @@
                  [postgresql "9.1-901.jdbc4"]
                  [ring/ring-jetty-adapter "1.2.2"]
                  [compojure "1.1.6"]
-                 [hiccup "1.0.5"]]
+                 [hiccup "1.0.5"]
+                 [com.cemerick/friend "0.2.0"]
+                 [org.webjars/foundation "5.1.1"]]
   :main oljacl.core
   :aot [oljacl.core])
