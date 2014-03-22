@@ -6,6 +6,7 @@
             [ring.middleware.resource :refer (wrap-resource)]
             ring.adapter.jetty
             [bultitude.core :as b]
+            [oljacl.controller.misc :as misc]
             [oljacl.model.migration :as schema])
   (:gen-class))
 
