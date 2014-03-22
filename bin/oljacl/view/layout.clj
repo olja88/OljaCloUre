@@ -18,14 +18,14 @@
     [:h1 {:class "container"} "Olja Clojure"]]
     [:div {:id "content" :class "container"} body]]
    
-   [:footer{:id "footer"}
-            [:p "&copy; Olja Latinović - 2014. "]]
+   [:footer{:id "footer" :class "container"}
+           [:p "&copy; Olja Latinović - 2014. "]]
    
    )
   
  )
 
-(defn glavni-template []
+(defn 404-template []
   (common "Zalutali ste"
-          [:div {:id "glavni-template"}
-          [:h1 {:class "container"} "Verovatno ste pogrešili adresu, na ovoj nema ništa!"]]))
+          [:div {:id "404-template"}
+          [:h2 {:class "container"} "Verovatno ste pogrešili adresu, na ovoj nema ništa!"]]))

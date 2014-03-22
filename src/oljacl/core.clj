@@ -11,7 +11,7 @@
 (defroutes routes
   controler/routes
   (route/resources "/")
-  (route/not-found (layout/glavni-template)))
+  (route/not-found (layout/404-template)))
 
 (def application (handler/site routes))
 
