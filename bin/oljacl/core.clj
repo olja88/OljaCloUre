@@ -11,7 +11,8 @@
             [ring.util.response :as resp]
             [hiccup.page :as h]
             [hiccup.element :as e]
-            [bultitude.core :as b]))
+            [bultitude.core :as b]
+            [oljacl.model.migration :as schema]))
 
 (def login-form
   [:div {:class "row"}
