@@ -65,7 +65,7 @@
               routes
               {:allow-anon? true
                :login-uri "/login"
-               :default-landing-uri "/"
+               :default-landing-uri "/xg"
                :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
                                         resp/response
                                         (resp/status 401))
