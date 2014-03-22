@@ -1,4 +1,5 @@
 (ns oljacl.core
+  (:use [ring.adapter.jetty :as ring])
   (:require (compojure handler [route :as route])
             [compojure.core :as compojure :refer (GET defroutes)]
             [hiccup.core :as h]
