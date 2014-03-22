@@ -37,10 +37,11 @@
                           [:ol
                            (for [{:keys [name doc route-prefix]} the-menagerie]
                              [:li (e/link-to (str route-prefix "/") [:strong name])
-                              " — " doc])]]
+                              " — " doc])]]]
                          [:div {:class "columns small-4"}
                           [:h2 "Credentials"]
-                          [:p "username/password"]]]))))
+                          [:p "username/password"]])])))
+                        
 
 (defn- wrap-app-metadata
   [h app-metadata]
