@@ -49,11 +49,9 @@ a {
 /* Olja footer*/
 #footer {
   background: #2c4663; 
-  /* height: 50px; */
   height: 20px; 
-  border-bottom: 1px solid #5178a2; 
+  border-top: 1px solid #5178a2; 
   box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  /* padding: 20px 0; */
 }
 #footer small{
   color: #fff;
@@ -221,20 +219,20 @@ h1 span a {
       width: auto;
     }
 	  #header h1 {
-	    background: url(/images/megaphone.png) 28% 10px no-repeat;
+	    /* background: url(/images/megaphone.png) 28% 10px no-repeat; */
 	  }
 	}
 	
 	/* Mobile/Browser */
 	@media only screen and (max-width: 767px) {
 	  #header h1 {
-	    background: url(/images/megaphone.png) 8% 10px no-repeat;
+	    /* background: url(/images/megaphone.png) 8% 10px no-repeat; */
 	  }
 	}
 	/* iPhone & Android portrait */
 	@media only screen and (max-width: 480px) {
 	  #header h1 {
-	    background: url(/images/megaphone.png) 10px 10px no-repeat;
+	    /* background: url(/images/megaphone.png) 10px 10px no-repeat; */
 	    font-size: 36px;
 	    text-align: left;
 	    padding-left: 60px;
