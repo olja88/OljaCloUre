@@ -11,8 +11,10 @@
     [:meta {:name "author" :content "Olja Latinović"}]
     [:meta {:name "keywords" :content "Olja Latinović, Clojure, Jquery"}]
     [:title title]
-    (include-css "/css/bootstrap.min.css")  
-    ]
+    (include-css "/css/bootstrap.min.css")
+    (include-js "/js/jquery-2.1.0.min.js")
+    (include-js "/js/bootstrap.min.js")    
+   ]
    [:body
     [:header {:id "header"}
     [:h1 {:class "container"} "Olja Clojure"]]
@@ -20,10 +22,7 @@
    
    [:footer{:id "footer"}
            [:p "&copy; Olja Latinović - 2014. "]]
-   (include-js "/js/jquery-2.1.0.min.js")
-   (include-js "/js/bootstrap.min.js")
    ]
-
    )
   
  )
