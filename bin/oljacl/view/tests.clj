@@ -17,7 +17,7 @@
     tests)])
 
 (defn index [tests]
-  (layout/common "TESTER"
+  (layout/common "Olja Clojure"
                  (test-form)
                  [:div {:class "clear"}]
                  (display-tests tests)))
