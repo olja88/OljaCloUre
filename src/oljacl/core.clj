@@ -1,19 +1,47 @@
 (ns oljacl.core
-(:use [compojure.core :only (defroutes)]
-        [ring.adapter.jetty :as ring])
-  (:require [compojure.route :as route]
-            [compojure.handler :as handler]
-            [oljacl.controller.tests :as controler]
-            [oljacl.view.layout :as layout]
+  (:require (compojure handler [route :as route])
+            [compojure.core :as compojure :refer (GET defroutes)]
+            [hiccup.core :as h]
+            [hiccup.element :as e]
+            [ring.middleware.resource :refer (wrap-resource)]
+            ring.adapter.jetty
+            [bultitude.core :as b]
             [oljacl.model.migration :as schema])
   (:gen-class))
 
-(defroutes routes
-  controler/routes
-  (route/resources "/")
-  (route/not-found (layout/err404-template)))
+(defn- erp-vars
+  [ns]
+  {:namespace ns
+   :ns-name (ns-name ns)
+   :name (-> ns meta :name)
+   :doc (-> ns meta :doc)
+   :route-prefix (misc/ns->context ns)
+   :app (ns-resolve ns 'app)
+   :page (ns-resolve ns 'page)})
 
-(def application (handler/site routes))
+(def the-menagerie (->> (b/namespaces-on-classpath :prefix misc/ns-prefix)
+                     distinct
+                     (map #(do (require %) (the-ns %)))
+                     (map erp-vars)
+                     (filter #(or (:app %) (:page %)))
+                     (sort-by :ns-name)))
+
+(defroutes landing
+  (GET "/" req (h/html [:html
+                        misc/pretty-head
+                        (misc/pretty-body 
+                         [:h1 {:style "margin-bottom:0px"}                         
+                         [:div {:class "columns small-8"}
+                          [:h2 "Olja test erp"]
+                          [:ol
+                           (for [{:keys [name doc route-prefix]} the-menagerie]
+                             [:li (e/link-to (str route-prefix "/") [:strong name])
+                              " — " doc])]]
+                         [:div {:class "columns small-4"}
+                          [:h2 "Credentials"]
+                          [:p "username/password"]
+                          [:ul [:li [:code "friend/clojure"] " — associated with a \"user\" role"]
+                               [:li [:code "friend-admin/clojure"] " — associated with an \"admin\" role"]]])])))
 
 (defn- wrap-app-metadata
   [h app-metadata]
