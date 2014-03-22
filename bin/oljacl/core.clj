@@ -37,7 +37,7 @@
                (-> identity friend/current-authentication :roles))
              "anonymous user")]
        login-form
-       [:h3 "Authorization demos"]
+       [:h3 "Authorization"]
        [:p "Each of these links require particular roles (or, any authentication) to access. "
            "If you're not authenticated, you will be redirected to a dedicated login page. "
            "If you're already authenticated, but do not meet the authorization requirements "
