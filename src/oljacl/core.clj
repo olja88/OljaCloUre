@@ -1,5 +1,7 @@
 (ns oljacl.core
-  (:use [ring.adapter.jetty :as ring])
+  (:use [ring.adapter.jetty :as ring]
+        [hiccup.core :only (html)]
+        [hiccup.page :only (html5 include-css include-js)])        
   (:require (compojure handler [route :as route])
             [compojure.core :as compojure :refer (GET defroutes)]
             [hiccup.core :as h]
@@ -36,7 +38,7 @@
 
 (compojure/defroutes landing
   (GET "/" req
-    (h/html5
+    (html5
       misc/pretty-head
       (misc/pretty-body
        (misc/github-link req)
@@ -60,7 +62,7 @@
        [:h3 "Logging out"]
        [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))
   (GET "/login" req
-    (h/html5 misc/pretty-head (misc/pretty-body login-form)))
+    (html5 misc/pretty-head (misc/pretty-body login-form)))
   (GET "/logout" req
     (friend/logout* (resp/redirect (str (:context req) "/"))))
   (GET "/requires-authentication" req
@@ -76,7 +78,7 @@
               {:allow-anon? true
                :login-uri "/login"
                :default-landing-uri "/"
-               :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
+               :unauthorized-handler #(-> (html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
                                         resp/response
                                         (resp/status 401))
                :credential-fn #(creds/bcrypt-credential-fn @users %)
