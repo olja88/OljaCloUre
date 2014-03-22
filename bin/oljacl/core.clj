@@ -59,7 +59,7 @@
   (run-jetty erp {:port port
                           :join? false}))
 
-(def application (handler/site routes))
+;;(def application (handler/site routes))
 
 (defn -main []
   (schema/migrate)
