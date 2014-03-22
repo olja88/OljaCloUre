@@ -16,10 +16,10 @@
    [:body
     [:div {:id "header"}
     [:h1 {:class "container"} "Olja Clojure"]]
-    [:div {:id "content" :class "container"} body]]
+    [:div {:id "content" :class "container"} body]
    
    [:footer{:id "footer" :class "container"}
-           [:p "&copy; Olja Latinović - 2014. "]]
+           [:p "&copy; Olja Latinović - 2014. "]]]
    
    )
   
