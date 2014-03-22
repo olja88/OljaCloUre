@@ -11,9 +11,9 @@
     [:meta {:name "author" :content "Olja Latinović"}]
     [:meta {:name "keywords" :content "Olja Latinović, Clojure, Jquery"}]
     [:title title]
-    (include-css "/stylesheets/base.css"
+    (include-css "/stylesheets/screen.css"
                  "/stylesheets/skeleton.css"
-                 "/stylesheets/screen.css")
+                 "/stylesheets/base.css")
     (include-css "http://fonts.googleapis.com/css?family=Sigmar+One&v1")
     ;;(include-css "/css/bootstrap.min.css") 
    ]
