@@ -75,8 +75,9 @@
            (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
            (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
              (compojure/context route-prefix []
-               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata))))
-    (GET "/" req
+               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))
+           
+  (GET "/" req
     (h/html5
       misc/pretty-head
       (misc/pretty-body
@@ -99,7 +100,10 @@
         [:li (e/link-to (misc/context-uri req "requires-authentication")
                "Requires any authentication, no specific role requirement")]]
        [:h3 "Logging out"]
-       [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))
+       [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))           
+           
+           )
+  
   
   
   )
