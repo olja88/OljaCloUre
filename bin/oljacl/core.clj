@@ -65,7 +65,7 @@
               routes
               {:allow-anon? true
                :login-uri "/login"
-               :default-landing-uri "/xg"
+               :default-landing-uri "/"
                :unauthorized-handler #(-> (h/html5 [:h2 "You do not have sufficient privileges to access " (:uri %)])
                                         resp/response
                                         (resp/status 401))
@@ -140,7 +140,7 @@ recognize two different username/password combinations:"]
 
 
 (defn start [port]
-  (run-jetty erp {:port port
+  (run-jetty page {:port port
                           :join? false}))
 
 ;;(def application (handler/site routes))
