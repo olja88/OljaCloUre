@@ -40,9 +40,7 @@
                               " — " doc])]]
                          [:div {:class "columns small-4"}
                           [:h2 "Credentials"]
-                          [:p "username/password"]
-                          [:ul [:li [:code "friend/clojure"] " — associated with a \"user\" role"]
-                               [:li [:code "friend-admin/clojure"] " — associated with an \"admin\" role"]]])])))
+                          [:p "username/password"]]]))))
 
 (defn- wrap-app-metadata
   [h app-metadata]
