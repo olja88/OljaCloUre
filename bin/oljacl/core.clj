@@ -25,7 +25,7 @@
       [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]])
 
 (compojure/defroutes routes
-  (GET "/" req
+  (GET "/index" req
     (h/html5
       misc/pretty-head
       (misc/pretty-body
@@ -95,7 +95,11 @@
                      (sort-by :ns-name)))
 
 (def erp (apply compojure/routes
-           page))
+           page
+           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+             (compojure/context route-prefix []
+               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
 
 (defn start [port]
   (run-jetty erp {:port port
