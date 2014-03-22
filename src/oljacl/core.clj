@@ -25,30 +25,6 @@
       [:div [:input {:type "submit" :class "button" :value "Login"}]]]]]])
 
 (compojure/defroutes routes
-  (GET "/" req
-    (h/html5
-      misc/pretty-head
-      (misc/pretty-body
-       (misc/github-link req)
-       [:h2 "Interactive form authentication"]
-       [:p "This app demonstrates typical username/password authentication, and a pinch of Friend's authorization capabilities."]
-       [:h3 "Current Status " [:small "(this will change when you log in/out)"]]
-       [:p (if-let [identity (friend/identity req)]
-             (apply str "Logged in, with these roles: "
-               (-> identity friend/current-authentication :roles))
-             "anonymous user")]
-       login-form
-       [:h3 "Authorization demos"]
-       [:p "Each of these links require particular roles (or, any authentication) to access. "
-           "If you're not authenticated, you will be redirected to a dedicated login page. "
-           "If you're already authenticated, but do not meet the authorization requirements "
-           "(e.g. you don't have the proper role), then you'll get an Unauthorized HTTP response."]
-       [:ul [:li (e/link-to (misc/context-uri req "role-user") "Requires the `user` role")]
-        [:li (e/link-to (misc/context-uri req "role-admin") "Requires the `admin` role")]
-        [:li (e/link-to (misc/context-uri req "requires-authentication")
-               "Requires any authentication, no specific role requirement")]]
-       [:h3 "Logging out"]
-       [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))
   (GET "/login" req
     (h/html5 misc/pretty-head (misc/pretty-body login-form)))
   (GET "/logout" req
@@ -73,36 +49,63 @@
                :workflows [(workflows/interactive-form)]})))
                         
 
-;;(defn- wrap-app-metadata
-;;  [h app-metadata]
-;;  (fn [req] (h (assoc req :demo app-metadata))))
+(defn- wrap-app-metadata
+  [h app-metadata]
+  (fn [req] (h (assoc req :demo app-metadata))))
 
-;;(defn- erp-vars
-;;  [ns]
-;;  {:namespace ns
-;;   :ns-name (ns-name ns)
-;;   :name (-> ns meta :name)
-;;   :doc (-> ns meta :doc)
-;;   :route-prefix (misc/ns->context ns)
-;;   :app (ns-resolve ns 'app)
-;;   :page (ns-resolve ns 'page)})
+(defn- erp-vars
+  [ns]
+  {:namespace ns
+   :ns-name (ns-name ns)
+   :name (-> ns meta :name)
+   :doc (-> ns meta :doc)
+   :route-prefix (misc/ns->context ns)
+   :app (ns-resolve ns 'app)
+   :page (ns-resolve ns 'page)})
 
-;;(def the-menagerie (->> (b/namespaces-on-classpath :prefix misc/ns-prefix)
-;;                    distinct
-;;                     (map #(do (require %) (the-ns %)))
-;;                     (map erp-vars)
-;;                     (filter #(or (:app %) (:page %)))
-;;                     (sort-by :ns-name)))
+(def the-menagerie (->> (b/namespaces-on-classpath :prefix misc/ns-prefix)
+                    distinct
+                     (map #(do (require %) (the-ns %)))
+                     (map erp-vars)
+                     (filter #(or (:app %) (:page %)))
+                     (sort-by :ns-name)))
 
-;;(def erp (apply compojure/routes
-;;           page
-;;           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
-;;           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
-;;             (compojure/context route-prefix []
-;;               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata)))))
+(def erp (apply compojure/routes
+           page
+           (route/resources "/" {:root "META-INF/resources/webjars/foundation/5.1.1/"})
+           (for [{:keys [app page route-prefix] :as metadata} the-menagerie]
+             (compojure/context route-prefix []
+               (wrap-app-metadata (compojure/routes (or page (fn [_])) (or app (fn [_]))) metadata))))
+    (GET "/" req
+    (h/html5
+      misc/pretty-head
+      (misc/pretty-body
+       (misc/github-link req)
+       [:h2 "Interactive form authentication"]
+       [:p "This app demonstrates typical username/password authentication, and a pinch of Friend's authorization capabilities."]
+       [:h3 "Current Status " [:small "(this will change when you log in/out)"]]
+       [:p (if-let [identity (friend/identity req)]
+             (apply str "Logged in, with these roles: "
+               (-> identity friend/current-authentication :roles))
+             "anonymous user")]
+       login-form
+       [:h3 "Authorization demos"]
+       [:p "Each of these links require particular roles (or, any authentication) to access. "
+           "If you're not authenticated, you will be redirected to a dedicated login page. "
+           "If you're already authenticated, but do not meet the authorization requirements "
+           "(e.g. you don't have the proper role), then you'll get an Unauthorized HTTP response."]
+       [:ul [:li (e/link-to (misc/context-uri req "role-user") "Requires the `user` role")]
+        [:li (e/link-to (misc/context-uri req "role-admin") "Requires the `admin` role")]
+        [:li (e/link-to (misc/context-uri req "requires-authentication")
+               "Requires any authentication, no specific role requirement")]]
+       [:h3 "Logging out"]
+       [:p (e/link-to (misc/context-uri req "logout") "Click here to log out") "."])))
+  
+  
+  )
 
 (defn start [port]
-  (run-jetty page {:port port
+  (run-jetty erp {:port port
                           :join? false}))
 
 ;;(def application (handler/site routes))
