@@ -25,7 +25,7 @@
   
  )
 
-(defn 404-template []
+(defn err404-template []
   (common "Zalutali ste"
-          [:div {:id "404-template"}
+          [:div {:id "err404-template"}
           [:h2 {:class "container"} "Verovatno ste pogrešili adresu, na ovoj nema ništa!"]]))
