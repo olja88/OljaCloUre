@@ -140,7 +140,7 @@ recognize two different username/password combinations:"]
 
 
 (defn start [port]
-  (run-jetty erp {:port port
+  (run-jetty landing {:port port
                           :join? false}))
 
 ;;(def application (handler/site routes))
